@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Special Surprise</title>
+  <style>
+    /* 🌈 Background gradient animation */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: "Poppins", sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: linear-gradient(270deg, #ff9a9e, #fad0c4, #a1c4fd, #c2e9fb);
+      background-size: 600% 600%;
+      animation: gradientBG 15s ease infinite;
+      text-align: center;
+      overflow-x: hidden;
+    }
+
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* 🌸 Card style with glassmorphism */
+    .container {
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(15px);
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0px 8px 25px rgba(0,0,0,0.25);
+      max-width: 90%;
+      width: 500px;
+      color: #fff;
+      animation: fadeIn 1.5s ease;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* ✨ Text animation */
+    h1, p {
+      margin: 10px 0;
+    }
+
+    /* 💕 Buttons */
+    button {
+      background: linear-gradient(135deg, #ff6b81, #ff4757);
+      border: none;
+      color: white;
+      padding: 12px 25px;
+      border-radius: 30px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.4s;
+      margin: 10px;
+      box-shadow: 0px 4px 15px rgba(0,0,0,0.3);
+    }
+
+    button:hover {
+      background: linear-gradient(135deg, #ff4757, #ff6b81);
+      transform: scale(1.1);
+      box-shadow: 0px 6px 20px rgba(255, 100, 130, 0.6);
+    }
+
+    /* 💫 Image styling */
+    img {
+      max-width: 100%;
+      border-radius: 15px;
+      margin-top: 15px;
+      box-shadow: 0px 6px 20px rgba(0,0,0,0.3);
+      animation: fadeIn 2s ease;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    /* 📝 Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    /* ⌨️ Typewriter effect */
+    .typewriter {
+      overflow: hidden;
+      border-right: .15em solid #fff;
+      white-space: nowrap;
+      margin: 0 auto;
+      letter-spacing: .05em;
+      width: 0;
+      animation: typing 5s steps(70, end) forwards, blink .75s step-end infinite;
+    }
+
+    /* ✅ Fixed typing length */
+    @keyframes typing {
+      from { width: 0 }
+      to { width: 13ch; } /* changed: matches approx length of your sentence */
+    }
+
+    @keyframes blink {
+      from, to { border-color: transparent }
+      50% { border-color: #fff; }
+    }
+
+    /* 🎊 Confetti canvas (full screen) */
+    canvas#confettiCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+  </style>
+</head>
+<body>
+  <!-- 🎁 First Page -->
+  <div class="container" id="page1">
+    <!-- changed: made this typewriter effect more stable -->
+    <h1 class="typewriter">Hey buddy 💖</h1> 
+    <p>Here are some special things I made for you, do you want to see? 🤭</p>
+    <button onclick="goToPage('page2')">I want to see</button>
+  </div>
+
+  <!-- 🎉 Birthday Page -->
+  <div class="container hidden" id="page2">
+    <h1>🎉 Happy Birthdayy Cuto Shreya🎂💐</h1>
+    <p>What do you think about yourself? Do you think you are cute? 😊</p>
+    <button onclick="showYes()">Yes 💕</button>
+    <button onclick="showNo()">No 🙈</button>
+    <p id="message" style="color:yellow; margin-top:15px; font-weight: bold;"></p>
+    <img id="specialImage" src="" alt="Lovely Surprise" class="hidden">
+    <br>
+    <!-- changed: added button to go to next page -->
+    <button onclick="goToPage('page3')">Next ➡️</button>
+  </div>
+
+  <!-- 🎊 Extra Page (you can duplicate this block for more texts) -->
+  <div class="container hidden" id="page3">
+    <h1>🌟 Another Surprise 🌟</h1>
+    <p>Here is so many wishes for u on this day❤️, take this also🥰🤗</p>
+    <!-- comment: add more custom texts for her birthday in this page -->
+    <button onclick="goToPage('page1')">Back to Start 🔄</button>
+  </div>
+
+  <!-- 🎊 Confetti canvas -->
+  <canvas id="confettiCanvas"></canvas>
+
+  <!-- 🎊 Confetti library -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <script>
+    // ✅ page switching function
+    function goToPage(pageId) {
+      document.querySelectorAll(".container").forEach(el => el.classList.add("hidden"));
+      document.getElementById(pageId).classList.remove("hidden");
+    }
+
+    function showNo() {
+      document.getElementById("message").innerText = "Oops 😅 you mistakenly clicked the wrong answer!";
+    }
+
+    function showYes() {
+      document.getElementById("message").innerText = "";
+      const img = document.getElementById("specialImage");
+      img.src = "cute-2.gif"; // 👉 Replace with her picture or gif
+      img.classList.remove("hidden");
+
+      // 🎊 Confetti burst effect
+      const duration = 3 * 1000; // 3 seconds
+      const end = Date.now() + duration;
+
+      (function frame() {
+        confetti({
+          particleCount: 5,
+          angle: 60,
+          spread: 55,
+          origin: { x: 0 }
+        });
+        confetti({
+          particleCount: 5,
+          angle: 120,
+          spread: 55,
+          origin: { x: 1 }
+        });
+
+        if (Date.now() < end) {
+          requestAnimationFrame(frame);
+        }
+      })();
+    }
+  </script>
+</body>
+</html>
